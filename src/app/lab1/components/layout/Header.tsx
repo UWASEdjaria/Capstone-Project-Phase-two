@@ -11,7 +11,8 @@ function Header() {
           </Link>
             {/* Navigation Links */}
              <nav className="flex  flex-col md:flex-row   justify-between py-4 gap-3  text-black">
-          <Link href="/about" className="hover:text-black">Our story</Link>
+          <Link href="/" className="hover:text-black">Home</Link>
+          <Link href="/AboutPage" className="hover:text-black">Our story</Link>
           <Link href="/contact" className="hover:text-black">Membership</Link>
           <Link href="/login" className="hover:text-black">Write</Link>
            <Link href="/contact" className="hover:text-black">sign in</Link>
