@@ -18,7 +18,7 @@ function Header() {
            <Link href="/contact" className="hover:text-black">sign in</Link>
 
           <Link
-            href="/register"
+            href="lab2/signUp"
             className="bg-black text-white px-2 py-2 rounded-full hover:bg-gray-900">
             Get Started
             </Link>
