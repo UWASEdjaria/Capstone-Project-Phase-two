@@ -14,11 +14,19 @@ function Header() {
           <Link href="/" className="hover:text-black">Home</Link>
           <Link href="/about" className="hover:text-black">Our story</Link>
           <Link href="/membership" className="hover:text-black">Membership</Link>
+<<<<<<< HEAD
           <Link href="/login" className="hover:text-black">Write</Link>
            <Link href="/contact" className="hover:text-black">sign in</Link>
 
           <Link
             href="/register"
+=======
+          <Link href="/write" className="hover:text-black">Write</Link>
+           <Link href="/sign-in" className="hover:text-black">sign in</Link>
+
+          <Link
+            href="/signUp"
+>>>>>>> 4018e87 (Add src/app pages to main)
             className="bg-black text-white px-2 py-2 rounded-full hover:bg-gray-900">
             Get Started
             </Link>

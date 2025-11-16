@@ -27,7 +27,11 @@ function Membership() {
             Start Reading
           </a>
           <a
+<<<<<<< HEAD
             href="/register"
+=======
+            href="/signup"
+>>>>>>> 4018e87 (Add src/app pages to main)
             className="border border-black text-black px-6 py-3 rounded-full font-medium hover:bg-black hover:text-white transition-colors"
           >
             Become a Member
