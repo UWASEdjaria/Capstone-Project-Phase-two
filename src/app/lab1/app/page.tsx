@@ -1,6 +1,7 @@
 import React from 'react'
 import Header from '../components/layout/Header'
 import Footer from '../components/layout/Footer';
+import Link from 'next/link';
 
 export const metadata = {
   title: "Medium — Human stories & ideas",
@@ -20,10 +21,11 @@ function page() {
         A place to read, write, and deepen your understanding
       </p>
       
-      {/* Button */}
-      <button className="bg-green-600 md:bg-black  text-white px-4 py-4 md:px-15  rounded-full font-medium text-xl hover:bg-green-800 transition-colors w-60">
-       Start reading
-      </button>
+      <Link
+        href="/lab2/login"
+        className="bg-green-600 md:bg-black  text-white px-4 py-4 md:px-15  rounded-full font-medium text-xl hover:bg-green-800 transition-colors w-60 inline-flex items-center justify-center">
+         Start reading
+      </Link>
       <Footer/>
     </main>
   )

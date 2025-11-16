@@ -40,7 +40,7 @@ function About() {
           Join our community and start sharing your thoughts and experiences today.
         </p>
         <Link
-          href="/signup"
+          href="/lab2/signup"
           className="bg-green-600 md:bg-black  text-white px-4 py-4 md:px-15  rounded-full font-medium text-xl hover:bg-green-800 transition-colors w-60"
         >
           Get Started
