@@ -1,10 +1,8 @@
-'use client';
+"use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import Footer from "@/app/lab1/components/layout/Footer";
-import Header from "@/app/lab1/components/layout/Header";
 
 export default function Login() {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -15,7 +13,7 @@ export default function Login() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!formData.email || !formData.password) {
@@ -23,15 +21,32 @@ export default function Login() {
       return;
     }
 
-    setError("");
-    console.log("Login attempt:", formData);
+    try {
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
 
-    // Example: redirect after successful login
-     router.push("/");
+      const data = await res.json();
+
+      if (!res.ok) {
+        setError(data.message || "Login failed.");
+        return;
+      }
+
+      // Save token
+      localStorage.setItem("token", data.token);
+
+      // Redirect to homepage
+      router.push("/");
+
+    } catch (err) {
+      setError("Server error. Try again.");
+    }
   };
 
   return (
-   
     <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
       <form
         onSubmit={handleSubmit}
@@ -74,13 +89,12 @@ export default function Login() {
         </button>
 
         <p className="text-sm text-center text-gray-600">
-          Do not have an account?{' '}
+          Do not have an account?{" "}
           <Link href="/lab2/signup" className="text-blue-500 hover:underline">
             Sign Up
           </Link>
         </p>
       </form>
-     
     </div>
   );
 }

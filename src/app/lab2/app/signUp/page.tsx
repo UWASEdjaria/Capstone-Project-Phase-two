@@ -1,30 +1,63 @@
-'use client';
+"use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Footer from "@/app/lab1/components/layout/Footer";
 import Header from "@/app/lab1/components/layout/Header";
 
 export default function SignUp() {
   const [formData, setFormData] = useState({ name: "", email: "", password: "" });
+  const [error, setError] = useState("");
+  const router = useRouter();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(formData); // replace with API call
+
+    if (!formData.name || !formData.email || !formData.password) {
+      setError("Please fill in all fields.");
+      return;
+    }
+
+    try {
+      const res = await fetch("/api/auth/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setError(data.message || "Signup failed.");
+        return;
+      }
+
+      // Save token
+      localStorage.setItem("token", data.token);
+
+      // Redirect to homepage
+      router.push("/");
+
+    } catch (err) {
+      setError("Server error. Try again.");
+    }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
-      <Header/>
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 p-4">
+      <Header />
       <form
         onSubmit={handleSubmit}
-        className="w-full max-w-md bg-white p-6 rounded-lg shadow-md space-y-4"
+        className="w-full max-w-md bg-white p-6 rounded-lg shadow-md space-y-4 mt-4"
       >
         <h2 className="text-2xl font-bold text-center text-gray-600">Sign Up</h2>
+
+        {error && <p className="text-red-500 text-sm text-center">{error}</p>}
 
         <input
           type="text"
@@ -67,7 +100,7 @@ export default function SignUp() {
           </Link>
         </p>
       </form>
-      <Footer/>
+      <Footer />
     </div>
   );
 }
