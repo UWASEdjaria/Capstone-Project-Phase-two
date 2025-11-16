@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Footer from "@/app/lab1/components/layout/Footer";
 import Header from "@/app/lab1/components/layout/Header";
+import { auth } from "@/app/lab1/lib/firebase";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
 export default function SignUp() {
   const [formData, setFormData] = useState({ name: "", email: "", password: "" });
@@ -24,24 +26,13 @@ export default function SignUp() {
     }
 
     try {
-      const res = await fetch("/api/auth/signup", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        setError(data.message || "Signup failed.");
-        return;
-      }
-
-      localStorage.setItem("token", data.token);
+      const userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
+      const user = userCredential.user;
+      const token = await user.getIdToken();
+      localStorage.setItem("token", token);
       router.push("/");
-
-    } catch {
-      setError("Server error. Try again.");
+    } catch (err: any) {
+      setError(err.message || "Signup failed.");
     }
   };
 

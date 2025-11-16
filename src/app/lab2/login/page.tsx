@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { auth } from "@/app/lab1/lib/firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 export default function Login() {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -22,27 +24,17 @@ export default function Login() {
     }
 
     try {
-      const res = await fetch("/api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        setError(data.message || "Login failed.");
-        return;
-      }
-
-      // Save token
-      localStorage.setItem("token", data.token);
-
-      // Redirect to homepage
+      const userCredential = await signInWithEmailAndPassword(auth, formData.email, formData.password);
+      const user = userCredential.user;
+      const token = await user.getIdToken();
+      localStorage.setItem("token", token);
       router.push("/");
-
     } catch (err) {
-      setError("Server error. Try again.");
+      // err may be a FirebaseError with a message property
+      // Convert to string safely
+      let message = "Login failed.";
+      try { message = String((err as { message?: unknown })?.message) || message; } catch { /* ignore */ }
+      setError(message);
     }
   };
 
@@ -66,7 +58,7 @@ export default function Login() {
             value={formData.email}
             onChange={handleChange}
             placeholder="you@example.com"
-            className="w-full p-3 rounded-md border text-black border-gray-300 focus:outline-none focus:ring-2 focus:ring-black bg-[#f9f9f9] transition"
+            className="w-full p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black bg-[#f9f9f9] transition"
             required
           />
         </div>
@@ -79,7 +71,7 @@ export default function Login() {
             value={formData.password}
             onChange={handleChange}
             placeholder="••••••••"
-            className="w-full p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black text-black transition"
+            className="w-full p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black bg-[#f9f9f9] transition"
             required
           />
         </div>
