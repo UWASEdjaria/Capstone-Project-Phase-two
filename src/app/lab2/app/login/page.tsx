@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Footer from "@/app/lab1/components/layout/Footer";
+import Header from "@/app/lab1/components/layout/Header";
 
 export default function Login() {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -29,6 +31,7 @@ export default function Login() {
   };
 
   return (
+   
     <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
       <form
         onSubmit={handleSubmit}
@@ -77,6 +80,7 @@ export default function Login() {
           </Link>
         </p>
       </form>
+     
     </div>
   );
 }

@@ -27,7 +27,7 @@ function Membership() {
             Start Reading
           </a>
           <a
-            href="/register"
+            href="/signup"
             className="border border-black text-black px-6 py-3 rounded-full font-medium hover:bg-black hover:text-white transition-colors"
           >
             Become a Member
