@@ -15,12 +15,19 @@ function Header() {
           <Link href="/about" className="hover:text-black">Our story</Link>
           <Link href="/membership" className="hover:text-black">Membership</Link>
           <Link href="/write" className="hover:text-black">Write</Link>
-           <Link href="/sign-in" className="hover:text-black">sign in</Link>
-
-          <Link
-            href="/signUp"
-            className="bg-black text-white px-2 py-2 rounded-full hover:bg-gray-900">
-            Get Started
+          <Link 
+              href="/sign-in" 
+              className="text-sm hover:text-black hidden sm:inline-block"
+            >
+              Sign In
+            </Link>
+            
+            <Link
+              href="/lab2/signup"
+              className="bg-black text-white px-4 py-2 rounded-full text-sm font-medium 
+                       hover:bg-gray-800 active:bg-gray-900 transition-colors duration-200"
+            >
+              Get Started
             </Link>
             
           </nav>
