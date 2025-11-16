@@ -22,7 +22,7 @@ export default function SignUp() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log('Signup attempt with:', formData);
-    // router.push('/lab2/login');
+    router.push('/lab2/login');
   };
 
   return (
