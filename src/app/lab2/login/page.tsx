@@ -23,7 +23,7 @@ export default function Login() {
 
     try {
       // Call your backend API
-      const res = await fetch("/api/login", {
+      const res = await fetch("/lab2/api/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
@@ -64,7 +64,7 @@ export default function Login() {
             value={formData.email}
             onChange={handleChange}
             placeholder="you@example.com"
-            className="w-full p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black bg-[#f9f9f9] transition"
+            className="w-full text-black p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black bg-[#f9f9f9] transition"
             required
           />
         </div>
@@ -77,7 +77,7 @@ export default function Login() {
             value={formData.password}
             onChange={handleChange}
             placeholder="••••••••"
-            className="w-full p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black bg-[#f9f9f9] transition"
+            className="w-full  text-black p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black bg-[#f9f9f9] transition"
             required
           />
         </div>

@@ -16,7 +16,7 @@ function Header() {
           <Link href="/membership" className="hover:text-black">Membership</Link>
           <Link href="/write" className="hover:text-black">Write</Link>
           <Link 
-              href="/sign-in" 
+              href="/lab2/login" 
               className="text-sm hover:text-black hidden sm:inline-block"
             >
               Sign In

@@ -22,7 +22,7 @@ export default function SignUp() {
     }
 
     try {
-      const res = await fetch("/api/signup", {
+      const res = await fetch("/lab2/api/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
@@ -55,7 +55,7 @@ export default function SignUp() {
           placeholder="Full Name"
           value={formData.name}
           onChange={handleChange}
-          className="w-full px-4 py-2 border border-gray-300 rounded-md text-gray-600 focus:outline-none focus:ring-2 focus:ring-green-500 transition"
+          className="w-full text-black  px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 transition"
           required
         />
 
@@ -65,7 +65,7 @@ export default function SignUp() {
           placeholder="Email"
           value={formData.email}
           onChange={handleChange}
-          className="w-full px-4 py-2 border border-gray-300 rounded-md text-gray-600 focus:outline-none focus:ring-2 focus:ring-green-500 transition"
+          className="w-full px-4 text-black py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 transition"
           required
         />
 
@@ -75,7 +75,7 @@ export default function SignUp() {
           placeholder="Password"
           value={formData.password}
           onChange={handleChange}
-          className="w-full px-4 py-2 border border-gray-300 rounded-md text-gray-600 focus:outline-none focus:ring-2 focus:ring-green-500 transition"
+          className="w-full text-black px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 transition"
           required
         />
 
