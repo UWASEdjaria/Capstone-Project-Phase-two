@@ -1,8 +1,6 @@
 
 "use client";
 import "./globals.css";
-import Login from "./lab2/app/login/page";
-import SignUp from "./lab2/app/signUp/page";
 export default function RootLayout({
   children,
 }: Readonly<{
