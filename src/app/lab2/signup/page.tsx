@@ -1,12 +1,11 @@
-"use client";
+'use client';
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import Footer from "@/app/lab1/components/layout/Footer";
-import Header from "@/app/lab1/components/layout/Header";
-import { auth } from "@/app/lab1/lib/firebase";
+import { auth, db } from "@/app/lab1/lib/firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
 
 export default function SignUp() {
   const [formData, setFormData] = useState({ name: "", email: "", password: "" });
@@ -26,19 +25,33 @@ export default function SignUp() {
     }
 
     try {
-      const userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        formData.email,
+        formData.password
+      );
       const user = userCredential.user;
+
+      // Save user data in Firestore
+      await setDoc(doc(db, "users", user.uid), {
+        uid: user.uid,
+        name: formData.name,
+        email: formData.email,
+        createdAt: new Date(),
+      });
+
+      // Optionally store token in localStorage
       const token = await user.getIdToken();
       localStorage.setItem("token", token);
-      router.push("/");
-    } catch (err: any) {
-      setError(err.message || "Signup failed.");
+
+      router.push("/lab2/login");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Sign up failed.");
     }
   };
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 p-4">
-      <Header />
       <form
         onSubmit={handleSubmit}
         className="w-full max-w-md bg-white p-6 rounded-lg shadow-md space-y-4 mt-4"
@@ -82,13 +95,12 @@ export default function SignUp() {
         </button>
 
         <p className="text-sm text-center text-gray-600 mt-2">
-          Already have an account?{' '}
+          Already have an account?{" "}
           <Link href="/lab2/login" className="text-blue-500 hover:underline">
             Log In
           </Link>
         </p>
       </form>
-      <Footer />
     </div>
   );
 }
