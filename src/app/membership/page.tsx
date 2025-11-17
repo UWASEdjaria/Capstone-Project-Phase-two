@@ -1,14 +1,16 @@
-import Footer from "@/app/lab1/components/layout/Footer";
-import Header from "@/app/lab1/components/layout/Header";
-
+// src/app/lab2/membership/page.tsx
+import Link from "next/link";
+import Header from "../lab1/components/layout/Header";
+import Footer from "../lab1/components/layout/Footer";
 export const metadata = {
   title: "Membership — Medium Clone",
   description: "Join Medium Clone and enjoy exclusive benefits for members.",
 };
 
-function Membership() {
+export default function Membership() {
   return (
     <main className="flex flex-col min-h-screen bg-white/90 text-gray-800">
+      {/* Navbar */}
       <Header />
 
       {/* Hero Section */}
@@ -20,22 +22,16 @@ function Membership() {
           Join our community and get access to exclusive stories, early access to features, and support for independent writers.
         </p>
         <div className="flex flex-col sm:flex-row justify-center gap-4">
-          <a
-            href="/signup"
-            className="bg-black text-white px-6 py-3 rounded-full font-medium hover:bg-gray-800 transition-colors"
-          >
-            Start Reading
-          </a>
-          <a
-<<<<<<< HEAD
-            href="/register"
-=======
-            href="/signup"
->>>>>>> 4018e87 (Add src/app pages to main)
-            className="border border-black text-black px-6 py-3 rounded-full font-medium hover:bg-black hover:text-white transition-colors"
-          >
-            Become a Member
-          </a>
+          <Link href="/lab2/signup">
+            <button className="bg-black text-white px-6 py-3 rounded-full font-medium hover:bg-gray-800 transition-colors">
+              Start Reading
+            </button>
+          </Link>
+          <Link href="/lab2/signup">
+            <button className="border border-black text-black px-6 py-3 rounded-full font-medium hover:bg-black hover:text-white transition-colors">
+              Become a Member
+            </button>
+          </Link>
         </div>
       </section>
 
@@ -67,9 +63,8 @@ function Membership() {
         </div>
       </section>
 
+      {/* Footer */}
       <Footer />
     </main>
   );
 }
-
-export default Membership;
