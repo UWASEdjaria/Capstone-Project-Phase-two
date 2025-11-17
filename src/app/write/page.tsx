@@ -1,5 +1,6 @@
+import Login from "../lab2/app/login/page"
 
-import Login from '../lab2/app/login/page'
+
 
 function page() {
   return (
