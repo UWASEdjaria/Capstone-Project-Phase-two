@@ -1,5 +1,6 @@
 import Footer from "@/app/lab1/components/layout/Footer";
 import Header from "@/app/lab1/components/layout/Header";
+import Link from "next/link";
 
 export const metadata = {
   title: "Membership — Medium Clone",
@@ -20,18 +21,18 @@ function Membership() {
           Join our community and get access to exclusive stories, early access to features, and support for independent writers.
         </p>
         <div className="flex flex-col sm:flex-row justify-center gap-4">
-          <a
+          <Link
             href="/lab2/signup"
             className="bg-black text-white px-6 py-3 rounded-full font-medium hover:bg-gray-800 transition-colors"
           >
             Start Reading
-          </a>
-          <a
-            href="/signup"
+          </Link>
+          <Link
+            href="/lab2/signup"
             className="border border-black text-black px-6 py-3 rounded-full font-medium hover:bg-black hover:text-white transition-colors"
           >
             Become a Member
-          </a>
+          </Link>
         </div>
       </section>
 
