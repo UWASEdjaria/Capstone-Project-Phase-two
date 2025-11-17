@@ -24,12 +24,12 @@ function Page() {
       </p>
       
       {/* Button */}
-       <Link
+       <a
       href="/lab2/signup">
       <button className="bg-green-600 md:bg-black  text-white px-4 py-4 md:px-15  rounded-full font-medium text-xl hover:bg-green-800 transition-colors w-60">
        Start reading
       </button>
-      </Link>
+      </a>
       <Footer/>
     </main>
   )
