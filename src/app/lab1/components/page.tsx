@@ -1,13 +1,15 @@
+
 import React from 'react'
 import Header from '../components/layout/Header'
 import Footer from '../components/layout/Footer';
+import Link from 'next/link';
 
 export const metadata = {
   title: "Medium — Human stories & ideas",
   description: "A place to read, write, and deepen your understanding.",
 };
 
-function page() {
+function Page() {
   return (
     <main className="min-h-screen bg-white/87 flex flex-col justify-between p-4 ">
         
@@ -22,12 +24,15 @@ function page() {
       </p>
       
       {/* Button */}
+       <Link
+      href="/lab2/signup">
       <button className="bg-green-600 md:bg-black  text-white px-4 py-4 md:px-15  rounded-full font-medium text-xl hover:bg-green-800 transition-colors w-60">
        Start reading
       </button>
+      </Link>
       <Footer/>
     </main>
   )
 }
 
-export default page
+export default Page
