@@ -17,11 +17,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-<<<<<<< Updated upstream
       <body
        
       >
-        {children}
+        <main className="flex-1">{children}
+        </main>
       </body>
     </html>
   );
