@@ -3,9 +3,6 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { auth, db } from "@/app/lab1/lib/firebase";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { doc, getDoc } from "firebase/firestore";
 
 export default function Login() {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -18,26 +15,34 @@ export default function Login() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
     if (!formData.email || !formData.password) {
       setError("Please fill in all fields.");
       return;
     }
 
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, formData.email, formData.password);
-      const user = userCredential.user;
-      const token = await user.getIdToken();
-      localStorage.setItem("token", token);
+      // Call your backend API
+      const res = await fetch("/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
 
-      const userDoc = await getDoc(doc(db, "users", user.uid));
-      if (!userDoc.exists()) {
-        setError("User data not found in Firestore.");
-        return;
+      if (!res.ok) {
+        const errData = await res.json();
+        throw new Error(errData.message || "Login failed");
       }
 
-      router.push("/");
+      const data = await res.json();
+
+      // Save token or user info in localStorage
+      localStorage.setItem("token", data.token);
+
+      setError("");
+      router.push("/"); // Redirect after login
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Login failed.");
+      setError(err instanceof Error ? err.message : "Login failed");
     }
   };
 
@@ -48,6 +53,7 @@ export default function Login() {
         className="w-full max-w-sm bg-white p-6 rounded-lg shadow-md space-y-6"
       >
         <h2 className="text-2xl font-bold text-center text-gray-600">Login</h2>
+
         {error && <p className="text-red-500 text-sm text-center">{error}</p>}
 
         <div className="flex flex-col gap-1">
