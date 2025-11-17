@@ -3,8 +3,6 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { auth } from "@/app/lab1/lib/firebase"; 
-import { signInWithEmailAndPassword } from "firebase/auth";
 
 export default function Login() {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -24,23 +22,27 @@ export default function Login() {
     }
 
     try {
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        formData.email,
-        formData.password
-      );
-      const user = userCredential.user;
+      // Call your backend API
+      const res = await fetch("/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
 
-      // Optionally save token locally
-      const token = await user.getIdToken();
-      localStorage.setItem("token", token);
+      if (!res.ok) {
+        const errData = await res.json();
+        throw new Error(errData.message || "Login failed");
+      }
+
+      const data = await res.json();
+
+      // Save token or user info in localStorage
+      localStorage.setItem("token", data.token);
 
       setError("");
-      router.push("/"); // redirect after successful login
+      router.push("/"); // Redirect after login
     } catch (err) {
-      setError(
-        err instanceof Error ? err.message : "Login failed. Please try again."
-      );
+      setError(err instanceof Error ? err.message : "Login failed");
     }
   };
 
@@ -85,7 +87,7 @@ export default function Login() {
         </button>
 
         <p className="text-sm text-center text-gray-600">
-          Do not have an account?{' '}
+          Do not have an account?{" "}
           <Link href="/lab2/signup" className="text-blue-500 hover:underline">
             Sign Up
           </Link>

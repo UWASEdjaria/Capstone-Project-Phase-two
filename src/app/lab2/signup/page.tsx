@@ -2,10 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link"; 
-import { auth, db } from "@/app/lab1/lib/firebase";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
+import Link from "next/link";
 
 export default function SignUp() {
   const [formData, setFormData] = useState({ name: "", email: "", password: "" });
@@ -25,28 +22,20 @@ export default function SignUp() {
     }
 
     try {
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        formData.email,
-        formData.password
-      );
-      const user = userCredential.user;
-
-      // Save user data in Firestore
-      await setDoc(doc(db, "users", user.uid), {
-        uid: user.uid,
-        name: formData.name,
-        email: formData.email,
-        createdAt: new Date(),
+      const res = await fetch("/api/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
       });
 
-      // Optionally store token in localStorage
-      const token = await user.getIdToken();
-      localStorage.setItem("token", token);
+      if (!res.ok) {
+        const errData = await res.json();
+        throw new Error(errData.message || "Sign up failed");
+      }
 
-      router.push("/lab2/login");
+      router.push("/lab2/login"); // Redirect to login after signup
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Sign up failed.");
+      setError(err instanceof Error ? err.message : "Sign up failed");
     }
   };
 
