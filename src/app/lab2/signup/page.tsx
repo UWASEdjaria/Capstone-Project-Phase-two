@@ -1,12 +1,11 @@
-"use client";
+'use client';
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-
+import { auth, db } from "@/app/lab1/lib/firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
-import { auth, db } from "@/app/lab1/lib/firebase";
 
 export default function SignUp() {
   const [formData, setFormData] = useState({ name: "", email: "", password: "" });
@@ -31,17 +30,19 @@ export default function SignUp() {
         formData.email,
         formData.password
       );
-
       const user = userCredential.user;
-      const token = await user.getIdToken();
-      localStorage.setItem("token", token);
 
+      // Save user data in Firestore
       await setDoc(doc(db, "users", user.uid), {
         uid: user.uid,
         name: formData.name,
         email: formData.email,
         createdAt: new Date(),
       });
+
+      // Optionally store token in localStorage
+      const token = await user.getIdToken();
+      localStorage.setItem("token", token);
 
       router.push("/lab2/login");
     } catch (err) {
@@ -65,7 +66,7 @@ export default function SignUp() {
           placeholder="Full Name"
           value={formData.name}
           onChange={handleChange}
-          className="w-full px-4 py-2 border border-gray-300 rounded-md text-gray-600"
+          className="w-full px-4 py-2 border border-gray-300 rounded-md text-gray-600 focus:outline-none focus:ring-2 focus:ring-green-500 transition"
           required
         />
 
@@ -75,7 +76,7 @@ export default function SignUp() {
           placeholder="Email"
           value={formData.email}
           onChange={handleChange}
-          className="w-full px-4 py-2 border border-gray-300 rounded-md text-gray-600"
+          className="w-full px-4 py-2 border border-gray-300 rounded-md text-gray-600 focus:outline-none focus:ring-2 focus:ring-green-500 transition"
           required
         />
 
@@ -85,11 +86,11 @@ export default function SignUp() {
           placeholder="Password"
           value={formData.password}
           onChange={handleChange}
-          className="w-full px-4 py-2 border border-gray-300 rounded-md text-gray-600"
+          className="w-full px-4 py-2 border border-gray-300 rounded-md text-gray-600 focus:outline-none focus:ring-2 focus:ring-green-500 transition"
           required
         />
 
-        <button className="w-full bg-green-600 text-white py-2 rounded-md">
+        <button className="w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-700 transition">
           Sign Up
         </button>
 
