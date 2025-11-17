@@ -1,41 +1,11 @@
-<<<<<<< HEAD
-export default function Login() {
-return (
-<form className="space-y-6">
-<div className="flex flex-col gap-1">
-<label className="text-sm font-medium text-gray-700">Email</label>
-<input
-type="email"
-className="w-full p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black bg-[#f9f9f9]"
-placeholder="you@example.com"
-/>
-</div>
-
-
-<div className="flex flex-col gap-1">
-<label className="text-sm font-medium text-gray-700">Password</label>
-<input
-type="password"
-className="w-full p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black bg-[#f9f9f9]"
-placeholder="••••••••"
-/>
-</div>
-
-
-<button className="w-full bg-black text-white p-3 rounded-md text-base font-semibold hover:bg-gray-900 transition">
-Sign In
-</button>
-</form>
-);
-}
-=======
 'use client';
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import Footer from "@/app/lab1/components/layout/Footer";
-import Header from "@/app/lab1/components/layout/Header";
+import { auth, db } from "@/app/lab1/lib/firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
 
 export default function Login() {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -46,33 +16,39 @@ export default function Login() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     if (!formData.email || !formData.password) {
       setError("Please fill in all fields.");
       return;
     }
 
-    setError("");
-    console.log("Login attempt:", formData);
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, formData.email, formData.password);
+      const user = userCredential.user;
+      const token = await user.getIdToken();
+      localStorage.setItem("token", token);
 
-    // Example: redirect after successful login
-     router.push("/");
+      const userDoc = await getDoc(doc(db, "users", user.uid));
+      if (!userDoc.exists()) {
+        setError("User data not found in Firestore.");
+        return;
+      }
+
+      router.push("/");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Login failed.");
+    }
   };
 
   return (
-   
     <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
       <form
         onSubmit={handleSubmit}
         className="w-full max-w-sm bg-white p-6 rounded-lg shadow-md space-y-6"
       >
         <h2 className="text-2xl font-bold text-center text-gray-600">Login</h2>
-
-        {error && (
-          <p className="text-red-500 text-sm text-center">{error}</p>
-        )}
+        {error && <p className="text-red-500 text-sm text-center">{error}</p>}
 
         <div className="flex flex-col gap-1">
           <label className="text-sm font-medium text-gray-700">Email</label>
@@ -105,14 +81,12 @@ export default function Login() {
         </button>
 
         <p className="text-sm text-center text-gray-600">
-          Do not have an account?{' '}
+          Do not have an account?{" "}
           <Link href="/lab2/signup" className="text-blue-500 hover:underline">
             Sign Up
           </Link>
         </p>
       </form>
-     
     </div>
   );
 }
->>>>>>> 4018e87 (Add src/app pages to main)
