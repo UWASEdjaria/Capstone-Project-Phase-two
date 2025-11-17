@@ -21,7 +21,7 @@ function Membership() {
         </p>
         <div className="flex flex-col sm:flex-row justify-center gap-4">
           <a
-            href="/signup"
+            href="/lab2/signup"
             className="bg-black text-white px-6 py-3 rounded-full font-medium hover:bg-gray-800 transition-colors"
           >
             Start Reading
