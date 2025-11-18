@@ -1,0 +1,13 @@
+- [x] Fix setState in useEffect in src/app/lab4/create-post/page.tsx: Replace useEffect and setState with useMemo for the 'post' state
+- [x] Fix setState in useEffect in src/app/lab5/page.tsx: Replace useEffect and setState with useMemo for the 'posts' state
+- [x] Fix any types and setState in useEffect in src/app/lab6/post/[id]/page.tsx: Replace useEffect and setState with useMemo for 'post', 'claps', and 'following'; define 'Comment' type
+- [x] Fix any types and unused variable in src/app/lab7/post/[id]/page.tsx: Add useEffect to fetch and set 'post' based on 'id'; define types for post and comments
+- [x] Fix any types in src/components/ClapButton.tsx: Define a 'Post' type in the Props interface
+- [x] Remove unused 'error' in src/app/lab2/api/profile/route.ts: Add 'error' parameter in catch block and log it
+- [x] Remove unused 'error' in src/app/lab2/api/signup/route.ts: Add 'error' parameter in catch block and log it
+- [x] Fix unused 'buffer' in src/app/lab2/api/upload/route.ts: Inline Buffer.from(bytes)
+- [x] Fix import and missing dependency in src/app/lab8/post/[id]/page.tsx: Add useEffect to fetch and set 'post' based on 'id'
+- [x] Create new branch 'blackboxai/fix-todo'
+- [ ] Add changes to git
+- [ ] Commit with message "Fix TODO issues"
+- [ ] Push to GitHub

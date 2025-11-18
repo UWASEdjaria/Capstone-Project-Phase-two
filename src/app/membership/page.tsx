@@ -22,15 +22,17 @@ export default function Membership() {
           Join our community and get access to exclusive stories, early access to features, and support for independent writers.
         </p>
         <div className="flex flex-col sm:flex-row justify-center gap-4">
-          <Link href="/lab2/signup">
-            <button className="bg-black text-white px-6 py-3 rounded-full font-medium hover:bg-gray-800 transition-colors">
-              Start Reading
-            </button>
+          <Link
+            href="/lab2/signup"
+            className="bg-black text-white px-6 py-3 rounded-full font-medium hover:bg-gray-800 transition-colors"
+          >
+            Start Reading
           </Link>
-          <Link href="/lab2/signup">
-            <button className="border border-black text-black px-6 py-3 rounded-full font-medium hover:bg-black hover:text-white transition-colors">
-              Become a Member
-            </button>
+          <Link
+            href="/lab2/signup"
+            className="border border-black text-black px-6 py-3 rounded-full font-medium hover:bg-black hover:text-white transition-colors"
+          >
+            Become a Member
           </Link>
         </div>
       </section>
